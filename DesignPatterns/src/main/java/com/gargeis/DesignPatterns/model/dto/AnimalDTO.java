@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Animal {
+public class AnimalDTO {
     private String nome;
     private Integer idade;
     private Caracteristica caracteristica;
