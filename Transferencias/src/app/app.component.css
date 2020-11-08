@@ -1,0 +1,11 @@
+.cartao{
+    border: 1px solid;
+    border-color: lightgrey;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.caixa-contas{
+    height: calc(100vh - 280px);
+    overflow-y: auto;
+}
