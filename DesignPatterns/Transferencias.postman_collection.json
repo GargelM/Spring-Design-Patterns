@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "d9bf548b-8134-4664-b2ef-961406e41fdc",
+		"name": "Transferencias",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Buscar Dados da Dashboard",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/dashboard",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"dashboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar Conta",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titular\": \"Gargel\",\r\n    \"saldo\": 1000.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/conta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"conta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Contas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/conta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"conta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Realizar Transferencias",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idFonte\": 1,\r\n    \"idDestino\": 2,\r\n    \"valor\": 500.00,\r\n    \"tipo\": \"TED\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/conta/transferencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"conta",
+						"transferencia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Transferencias",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/conta/transferencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"conta",
+						"transferencia"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
