@@ -1,18 +1,23 @@
 package com.gargeis.DesignPatterns.service;
 
+import com.gargeis.DesignPatterns.enums.TipoTransferenciaEnum;
 import com.gargeis.DesignPatterns.enums.TransferenciaStatusEnum;
 import com.gargeis.DesignPatterns.model.Conta;
 import com.gargeis.DesignPatterns.repository.ContaRepository;
 import com.gargeis.DesignPatterns.repository.TransferenciaRepository;
 import com.gargeis.DesignPatterns.service.abstracttemplates.RotinaDeTransferencia;
 import com.gargeis.DesignPatterns.service.interfaces.ProcessoDeTransferencia;
+import com.gargeis.DesignPatterns.service.interfaces.impl.DelayTransferencia;
+import com.gargeis.DesignPatterns.service.interfaces.impl.MostrarLogDeTransferencia;
+import com.gargeis.DesignPatterns.service.interfaces.impl.RegistroTransferencia;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
-@Service
+@Component
 public class TED extends RotinaDeTransferencia {
 
     @Autowired
@@ -20,6 +25,9 @@ public class TED extends RotinaDeTransferencia {
 
     @Autowired
     private ContaRepository contaRepository;
+
+    @Autowired
+    private RegistroTransferencia registroTransferencia;
 
     @Override
     protected void verificaContas(Conta fonte, Conta destino) {
@@ -29,7 +37,7 @@ public class TED extends RotinaDeTransferencia {
 
     @Override
     protected void verificaSaldo(Conta fonte, BigDecimal valor) {
-        if(fonte.getSaldo().compareTo(valor) <= 0){
+        if (fonte.getSaldo().compareTo(valor) <= 0) {
             throw new RuntimeException("Saldo inválido!");
         }
     }
@@ -39,8 +47,22 @@ public class TED extends RotinaDeTransferencia {
         fonte.setSaldo(fonte.getSaldo().subtract(valor));
         destino.setSaldo(destino.getSaldo().add(valor));
 
+        contaRepository.save(fonte);
+        contaRepository.save(destino);
+
         processos.forEach(processo -> processo.executar(fonte, destino, valor));
 
         return TransferenciaStatusEnum.OK;
     }
+
+    @Override
+    public TipoTransferenciaEnum getTipoTransferencia() {
+        return TipoTransferenciaEnum.TED;
+    }
+
+    @Override
+    public List<ProcessoDeTransferencia> getProcessos() {
+        return Arrays.asList(registroTransferencia, new MostrarLogDeTransferencia(), new DelayTransferencia(5));
+    }
+
 }

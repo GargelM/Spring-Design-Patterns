@@ -5,6 +5,7 @@ import com.gargeis.DesignPatterns.model.Conta;
 import com.gargeis.DesignPatterns.model.Transferencia;
 import com.gargeis.DesignPatterns.model.dto.DadosTransferenciaDTO;
 import com.gargeis.DesignPatterns.service.DashboardService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,11 @@ public class ContaController {
     @PostMapping("/transferencia")
     public ResponseEntity<TransferenciaStatusEnum> transferir(@RequestBody DadosTransferenciaDTO corpo) {
         return ResponseEntity.ok(dashboardService.transferir(corpo));
+    }
+
+    @GetMapping("/transferencia")
+    public ResponseEntity<List<Transferencia>> buscarTransferenciar(){
+        return ResponseEntity.ok(dashboardService.buscarTransferencias());
     }
 
 

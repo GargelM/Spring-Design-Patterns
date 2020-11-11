@@ -1,19 +1,22 @@
 package com.gargeis.DesignPatterns.service;
 
+import com.gargeis.DesignPatterns.enums.TipoTransferenciaEnum;
 import com.gargeis.DesignPatterns.enums.TransferenciaStatusEnum;
 import com.gargeis.DesignPatterns.model.Conta;
 import com.gargeis.DesignPatterns.model.DadosDashboard;
+import com.gargeis.DesignPatterns.model.Transferencia;
 import com.gargeis.DesignPatterns.model.dto.DadosDashboardDTO;
 import com.gargeis.DesignPatterns.model.dto.DadosTransferenciaDTO;
 import com.gargeis.DesignPatterns.repository.ContaRepository;
 import com.gargeis.DesignPatterns.repository.DashboardRepository;
 import com.gargeis.DesignPatterns.repository.TransferenciaRepository;
 import com.gargeis.DesignPatterns.service.abstracttemplates.RotinaDeTransferencia;
+import com.gargeis.DesignPatterns.service.factory.DadosDashboardFactory;
+import com.gargeis.DesignPatterns.service.interfaces.RotinaDeTransferenciaFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,15 +31,15 @@ public class DashboardService {
     @Autowired
     private TransferenciaRepository transferenciaRepository;
 
+    @Autowired
+    private RotinaDeTransferenciaFactory rotinaDeTransferenciaFactory;
+
     public DadosDashboard buscarDados() {
         DadosDashboard dados = null;
         try {
             dados = dashboardRepository.findById(1).get();
         } catch (Exception e) {
-            return dashboardRepository.save(DadosDashboard.builder()
-                    .quantidadeContas(0)
-                    .saldo(BigDecimal.ZERO)
-                    .build());
+            return dashboardRepository.save(DadosDashboardFactory.buildEmptyObject());
         }
         return dados;
     }
@@ -72,8 +75,13 @@ public class DashboardService {
 
     public TransferenciaStatusEnum transferir(DadosTransferenciaDTO dados) {
 
-        RotinaDeTransferencia ted = new TED();
+        //STRATEGY = Programar para Interfaces Exemplo. List<Integer> lista = new ArrayList<>(); || new LinkedList(); || new Vector();;
+        RotinaDeTransferencia implementacao = rotinaDeTransferenciaFactory.build(dados.getTipo());
 
-        return ted.realizarTransferencia(contaRepository.findById(dados.getIdFonte()).get(), contaRepository.findById(dados.getIdDestino()).get(), dados.getValor(), new ArrayList<>());
+        return implementacao.realizarTransferencia(contaRepository.findById(dados.getIdFonte()).get(), contaRepository.findById(dados.getIdDestino()).get(), dados.getValor(), implementacao.getProcessos());
+    }
+
+    public List<Transferencia> buscarTransferencias() {
+        return transferenciaRepository.findAll();
     }
 }
