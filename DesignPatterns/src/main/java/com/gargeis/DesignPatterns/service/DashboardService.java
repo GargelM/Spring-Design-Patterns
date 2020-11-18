@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -33,6 +34,9 @@ public class DashboardService {
 
     @Autowired
     private RotinaDeTransferenciaFactory rotinaDeTransferenciaFactory;
+    /*=
+    O spring esta injetando na classe factoru as implementações / classes filhas da classe abstrata rotina de transferencia
+    new RotinaDeTransferenciaFactory(Arrays.asList(new TED[], new DOC))*/;
 
     public DadosDashboard buscarDados() {
         DadosDashboard dados = null;
