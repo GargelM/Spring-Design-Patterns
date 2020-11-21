@@ -10,18 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-// FACTORY
 
-/**
- *
- * TED ted = new TED();
- * ted.setTransferenciaRepository = new TransferenciaRepository();
- * ted.setlalalalalaRepository = new LALALALALARepository();
- *
- * this.build("TED");
- *
- */
-//Construir um objeto pronto atraves do parametro variavel
 @Component
 public class RotinaDeTransferenciaFactory {
 
@@ -35,7 +24,7 @@ public class RotinaDeTransferenciaFactory {
         tipos.forEach(tipo -> tiposDeTransferencia.put(tipo.getTipoTransferencia(), tipo));
     }
 
-    //
+
     public RotinaDeTransferencia build(TipoTransferenciaEnum tipo){
         return tiposDeTransferencia.get(tipo);
     }

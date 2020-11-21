@@ -4,7 +4,7 @@ import com.gargeis.DesignPatterns.model.DadosDashboard;
 
 import java.math.BigDecimal;
 
-// FACTORY
+
 public class DadosDashboardFactory {
     public static DadosDashboard buildEmptyObject() {
         return  DadosDashboard.builder()

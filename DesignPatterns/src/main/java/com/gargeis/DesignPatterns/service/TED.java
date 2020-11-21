@@ -65,4 +65,5 @@ public class TED extends RotinaDeTransferencia {
         return Arrays.asList(registroTransferencia, new MostrarLogDeTransferencia(), new DelayTransferencia(5));
     }
 
+
 }

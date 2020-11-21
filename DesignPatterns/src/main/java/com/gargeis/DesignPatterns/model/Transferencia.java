@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder // BUILDER PATTERN
+@Builder
 public class Transferencia {
 
     @Id

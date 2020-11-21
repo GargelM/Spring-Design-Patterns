@@ -34,9 +34,6 @@ public class DashboardService {
 
     @Autowired
     private RotinaDeTransferenciaFactory rotinaDeTransferenciaFactory;
-    /*=
-    O spring esta injetando na classe factoru as implementações / classes filhas da classe abstrata rotina de transferencia
-    new RotinaDeTransferenciaFactory(Arrays.asList(new TED[], new DOC))*/;
 
     public DadosDashboard buscarDados() {
         DadosDashboard dados = null;
@@ -79,7 +76,7 @@ public class DashboardService {
 
     public TransferenciaStatusEnum transferir(DadosTransferenciaDTO dados) {
 
-        //STRATEGY = Programar para Interfaces Exemplo. List<Integer> lista = new ArrayList<>(); || new LinkedList(); || new Vector();;
+
         RotinaDeTransferencia implementacao = rotinaDeTransferenciaFactory.build(dados.getTipo());
 
         return implementacao.realizarTransferencia(contaRepository.findById(dados.getIdFonte()).get(), contaRepository.findById(dados.getIdDestino()).get(), dados.getValor(), implementacao.getProcessos());

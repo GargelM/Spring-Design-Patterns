@@ -4,7 +4,6 @@ import com.gargeis.DesignPatterns.enums.TipoTransferenciaEnum;
 import com.gargeis.DesignPatterns.enums.TransferenciaStatusEnum;
 import com.gargeis.DesignPatterns.model.Conta;
 import com.gargeis.DesignPatterns.repository.ContaRepository;
-import com.gargeis.DesignPatterns.repository.TransferenciaRepository;
 import com.gargeis.DesignPatterns.service.abstracttemplates.RotinaDeTransferencia;
 import com.gargeis.DesignPatterns.service.interfaces.ProcessoDeTransferencia;
 import com.gargeis.DesignPatterns.service.interfaces.impl.DelayTransferencia;
@@ -26,7 +25,7 @@ public class DOC extends RotinaDeTransferencia {
     @Autowired
     private RegistroTransferencia registroTransferencia;
 
-    //validação
+
     @Override
     protected void verificaContas(Conta fonte, Conta destino) {
         contaRepository.findById(fonte.getId()).orElseThrow(() -> new RuntimeException("Conta Fonte inexistente!"));
@@ -45,7 +44,7 @@ public class DOC extends RotinaDeTransferencia {
         fonte.setSaldo(fonte.getSaldo().subtract(valor));
         destino.setSaldo(destino.getSaldo().add(valor));
 
-        //atualiza valores
+
         contaRepository.save(fonte);
         contaRepository.save(destino);
 
@@ -65,7 +64,4 @@ public class DOC extends RotinaDeTransferencia {
         return Arrays.asList(registroTransferencia, new MostrarLogDeTransferencia(), new DelayTransferencia(15));
     }
 
-    //Injecao de idepe; spring instancia
-    //@Autowired
-    //private TransferenciaRepository transferenciaRepository;
 }
